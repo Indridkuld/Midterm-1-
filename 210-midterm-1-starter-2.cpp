@@ -184,7 +184,14 @@ public: // this identifier indicates that everything under it is public to the c
             cout << "List is empty." << endl; // message indicating the list is empty
             return; // exits the method early
         } 
-        
+        while (current) { // loops through the list while current is not nullptr, indicating there are more nodes to process
+            cout << current->data << " "; // outputs the data of the current node followed by a space
+            if (current->next) // checks if current's next pointer is not nullptr, meaning there is a next node
+                current = current->next->next; // advances current two nodes ahead by setting it to current's next's next pointer
+            else // if current's next pointer is nullptr, meaning there is no next node
+                break; // exits the loop early
+        }
+        cout << endl; // outputs a newline character after printing all elements 
     }
 
     void print() { // print method to display the elements of the list from head to tail
@@ -216,9 +223,22 @@ public: // this identifier indicates that everything under it is public to the c
 
 int main() { // main function, drives the program execution
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    DoublyLinkedList dll; // creates an instance of the DoublyLinkedList class named dll 
 
-    void print(); // placeholder to avoid compiler warning about missing main content
+    for (int i = 1; i <= 10; ++i) // loop to add integers 1 through 10 to the list
+        dll.push_back(i); // adds the integer i to the end of the doubly linked list using the push_back method
 
+    cout << "Original list: "; // outputs a label for the original list
+
+    dll.print(); // calls the print method to display the elements of the list
+
+    cout << "Every other element: "; // outputs a label for every other element
+
+    dll.every_other_element(); // calls the every_other_element method to display every other element in
+
+    cout << "Reverse list: "; // outputs a label for the reversed list
     
+    dll.print_reverse(); // calls the print_reverse method to display the elements of the list in reverse order
+
     return 0; // indicates successful program termination
 }
