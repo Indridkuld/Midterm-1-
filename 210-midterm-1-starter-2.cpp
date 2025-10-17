@@ -77,44 +77,44 @@ public: // this identifier indicates that everything under it is public to the c
         delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void delete_pos(int pos) { 
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
+    void delete_pos(int pos) { // member method to delete the node at the specified position, takes integer position as parameter
+        if (!head) { // checks if the list is empty by checking if the head pointer is nullptr
+            cout << "List is empty." << endl; // outputs an error message if the list is empty
+            return; // exits the method early
         }
     
-        if (pos == 1) {
-            pop_front();
-            return;
+        if (pos == 1) { // checks if the specified position is 1, indicating the first node
+            pop_front(); // calls the pop_front method to remove the first node from the list
+            return; // exits the method early
         }
     
-        Node* temp = head;
+        Node* temp = head; // creates a temporary node pointer temp and initializes it to head to start traversing the list
     
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
-                cout << "Position doesn't exist." << endl;
-                return;
+        for (int i = 1; i < pos; i++){ // loops from 1 to pos-1, moving temp to the next node each iteration
+            if (!temp) { // checks if temp is nullptr during the loop, indicating the position went out of bounds of the listj
+                cout << "Position doesn't exist." << endl; // outputs an error message if the position doesn't exist
+                return; // exits the method early
             }
-            else
-                temp = temp->next;
+            else // if temp is not nullptr
+                temp = temp->next; // sets temp to temp's next pointer, moving to the next node in the list
         }
-        if (!temp) {
-            cout << "Position doesn't exist." << endl;
-            return;
-        }
-    
-        if (!temp->next) {
-            pop_back();
-            return;
+        if (!temp) { // checks if temp is nullptr after the loop, in other words the position went out of bounds of the list
+            cout << "Position doesn't exist." << endl; // outputs an error message if the position doesn't exist
+            return; // exits the method early
         }
     
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        if (!temp->next) { // checks if temp's next pointer is nullptr, indicating temp is the last node
+            pop_back(); // calls the pop_back method to remove the last node from the list
+            return; // exits the method early
+        }
+        // the below code handles the case where temp is neither the first nor the last node, and fixes the pointers to remove temp from the list
+        Node* tempPrev = temp->prev; // creates a new node pointer tempPrev and initializes it to temp's prev pointer, pointing to the node before temp
+        tempPrev->next = temp->next; // sets tempPrev's next pointer to temp's next pointer, effectively skipping over temp in the list
+        temp->next->prev = tempPrev;  // sets temp's next node's prev pointer to tempPrev, skipping over temp in the list
+        delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void push_back(int v) {
+    void push_back(int v) { // member method to add a new node with the specified value to the end of the list, takes integer value as parameter
         Node* newNode = new Node(v);
         if (!tail)
             head = tail = newNode;
