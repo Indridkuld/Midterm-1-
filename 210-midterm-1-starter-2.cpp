@@ -170,8 +170,6 @@ public: // this identifier indicates that everything under it is public to the c
         delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void every_other_element() {} // temp 
- 
     ~DoublyLinkedList() { // destructor of the DoublyLinkedList class, called when an object of the class is destroyed at the end of its scope
         while (head) { // loops while head is not nullptr, ie. there are still nodes in the list
             Node* temp = head; // creates a temporary node pointer temp and initializes it to head to keep track of the node to be deleted
@@ -179,6 +177,16 @@ public: // this identifier indicates that everything under it is public to the c
             delete temp; // deletes the temp object and releases its memory to prevent memory leaks
         }
     }
+
+    void every_other_element() {// member method that will output every other element in the list, starting from the first element
+        Node* current = head; // creates a temporary node pointer current and initializes it to head to start traversing the list
+        if (!current) { // checks if current is nullptr, indicating the list is empty
+            cout << "List is empty." << endl; // message indicating the list is empty
+            return; // exits the method early
+        } 
+        
+    }
+
     void print() { // print method to display the elements of the list from head to tail
         Node* current = head; // creates a temporary node pointer current and initializes it to head to start traversing the list
         if (!current) { // checks if current is nullptr, indicating the list is empty
@@ -208,6 +216,8 @@ public: // this identifier indicates that everything under it is public to the c
 
 int main() { // main function, drives the program execution
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+
+    void print(); // placeholder to avoid compiler warning about missing main content
 
     
     return 0; // indicates successful program termination
