@@ -114,101 +114,101 @@ public: // this identifier indicates that everything under it is public to the c
         delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void push_back(int v) { // member method to add a new node with the specified value to the end of the list, takes integer value as parameter
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
-        else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+    void push_back(int v) { // member method to add a new node with the specified value to the end of the list, takes integer value 'v' as parameter
+        Node* newNode = new Node(v); // creates a new node with the 'v' value and assigns it to node pointer newNode
+        if (!tail) // checks if the list is empty by checking if tail is nullptr
+            head = tail = newNode; // if the list is empty, sets both head and tail to the new node as it is the only node in the list
+        else { // if the list is not empty
+            tail->next = newNode; // sets the current tail's next pointer to the new node, linking the last node to the new node
+            newNode->prev = tail; // sets the new node's prev pointer to the current tail, linking the new node back to the last node
+            tail = newNode; // sets the tail pointer of the list to the new node, making it the new last node in the list
         }
     }
     
-    void push_front(int v) {
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
-        else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+    void push_front(int v) { // member method to add a new node with the specified value to the front of the list, takes integer value 'v' as parameter
+        Node* newNode = new Node(v); // creates a new node with the 'v' value and assigns it to node pointer newNode
+        if (!head) // checks if the list is empty by checking if head is nullptr
+            head = tail = newNode; // if the list is empty, sets both head and tail to the new node as it is the only node in the list
+        else { // if the list is not empty
+            newNode->next = head; // sets the new node's next pointer to the current head, linking the new node to the first node
+            head->prev = newNode; // sets the current head's prev pointer to the new node, linking the first node back to the new node
+            head = newNode; // sets the head pointer of the list to the new node, making it the new first node in the list
         }
     }
     
-    void pop_front() {
+    void pop_front() { // member method to remove the first node from the list, does not take any parameters
 
-        if (!head) {
-            cout << "List is empty." << endl;
-            return;
+        if (!head) { // checks if the list is empty by checking if head is nullptr
+            cout << "List is empty." << endl; // outputs an error message if the list is empty
+            return; // exits the method early
         }
 
-        Node * temp = head;
+        Node * temp = head; // creates a temporary node pointer temp and initializes it to head to keep track of the node to be deleted
 
-        if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+        if (head->next) { // checks if head's next pointer is not nullptr, meaning there is more than one node in the list
+            head = head->next; // if there is more than one node, updates head to point to the second node in the list
+            head->prev = nullptr; // sets the new head's prev pointer to nullptr, as it is now the first node in the list
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if head's next pointer is nullptr, meaning there is only one node in the list
+            head = tail = nullptr; // sets both head and tail to nullptr, indicating the list is now empty
+        delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void pop_back() {
-        if (!tail) {
-            cout << "List is empty." << endl;
-            return;
+    void pop_back() { // member method to remove the last node from the list, does not take any parameters
+        if (!tail) { // checks if the list is empty by checking if tail is nullptr
+            cout << "List is empty." << endl; // outputs an error message if the list is empty
+            return; // exits the method early
         }
-        Node * temp = tail;
+        Node * temp = tail; // creates a temporary node pointer temp and initializes it to tail to keep track of the node to be deleted
 
-        if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+        if (tail->prev) { // checks if tail's prev pointer is not nullptr, checking if there is more than one node in the list
+            tail = tail->prev; // if there is more than one node, updates tail to point to the second-to-last node in the list
+            tail->next = nullptr; // sets the new tail's next pointer to nullptr, as it is now the last node in the list
         }
-        else
-            head = tail = nullptr;
-        delete temp;
+        else // if tail's prev pointer is nullptr, there is only one node in the list
+            head = tail = nullptr;  // sets both head and tail to nullptr, indicating the list is now empty
+        delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
     void every_other_element() {} // temp 
-
-    ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+ 
+    ~DoublyLinkedList() { // destructor of the DoublyLinkedList class, called when an object of the class is destroyed at the end of its scope
+        while (head) { // loops while head is not nullptr, ie. there are still nodes in the list
+            Node* temp = head; // creates a temporary node pointer temp and initializes it to head to keep track of the node to be deleted
+            head = head->next; // updates head to point to the next node in the list
+            delete temp; // deletes the temp object and releases its memory to prevent memory leaks
         }
     }
-    void print() {
-        Node* current = head;
-        if (!current) {
-            cout << "List is empty." << endl;
-            return;
+    void print() { // print method to display the elements of the list from head to tail
+        Node* current = head; // creates a temporary node pointer current and initializes it to head to start traversing the list
+        if (!current) { // checks if current is nullptr, indicating the list is empty
+            cout << "List is empty." << endl; // message indicating the list is empty
+            return; // exits the method early
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
+        while (current) { // loops through the list while current is not nullptr
+            cout << current->data << " "; // outputs the data of the current node followed by a space
+            current = current->next; // advances current to the next node in the list by setting it to current's next pointer
         }
-        cout << endl;
+        cout << endl; // outputs a newline character after printing all elements
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
-            cout << "List is empty." << endl;
-            return;
+    void print_reverse() { // print method to display the elements of the list from tail to head, reversed 
+        Node* current = tail; // creates a temporary node pointer current and initializes it to tail to start traversing the list in reverse
+        if (!current) {  // checks if current is nullptr, indicating the list is empty
+            cout << "List is empty." << endl; // message that the list is empty
+            return; // exits the method early
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+        while (current) { // loops through the list while current is not nullptr
+            cout << current->data << " "; // outputs the data of the current node followed by a space
+            current = current->prev; // moves current to the previous node in the list by setting it to current's prev pointer
         }
-        cout << endl;
+        cout << endl; // outputs a newline character after printing all elements
     }
 };
 
-int main() {
+int main() { // main function, drives the program execution
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
 
     
-    return 0;
+    return 0; // indicates successful program termination
 }
