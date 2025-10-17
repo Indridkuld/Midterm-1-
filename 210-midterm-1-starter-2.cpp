@@ -41,43 +41,43 @@ public: // this identifier indicates that everything under it is public to the c
 
         if (!temp) { // checks if temp is nullptr after the loop, indicating the position went out of bounds of the list
             cout << "Position exceeds list size. Node not inserted.\n"; // outputs an error message if the position exceeds the list size
-            delete newNode; // deletes the 
-            return;
+            delete newNode; // deletes the newNode object and releases its memory to prevent memory leaks
+            return; // exits the method early
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
-        else
-            tail = newNode;
-        temp->next = newNode;
-    }
+        newNode->next = temp->next; // sets the new node's next pointer to temp's next pointer, linking the new node to the node after temp
+        newNode->prev = temp; // sets the new node's prev pointer to temp, linking the new node back to temp
+        if (temp->next) // checks if temp's next pointer is not nullptr, meaning temp is not the last node
+            temp->next->prev = newNode; // updates the next node's prev pointer to point back to the new node
+        else // if temp's next pointer is nullptr, meaning temp is the last node
+            tail = newNode; // updates the tail pointer of the list to point to the new node as it is now the last node
+        temp->next = newNode; // sets temp's next pointer to the new node, linking temp to the new node
+    } 
 
-    void delete_val(int value) {
-        if (!head) return;
+    void delete_val(int value) {  // member method to delete the node with the specified value, takes integer value as parameter
+        if (!head) return; // checks if the list is empty by checking if head is nullptr, exits early if it is
 
-        Node* temp = head;
+        Node* temp = head; // creates a temporary node pointer temp and initializes it to head to start traversing the list
         
-        while (temp && temp->data != value)
-            temp = temp->next;
+        while (temp && temp->data != value) // loops through the list until temp is nullptr or temp's data matches the specified value
+            temp = temp->next; // advances temp to the next node in the list by setting it to temp's next pointer
 
-        if (!temp) return; 
+        if (!temp) return; // checks if temp is nullptr after the loop, indicating the value was not found in the list, exits early if it is
 
-        if (temp->prev)
-            temp->prev->next = temp->next;
-        else
-            head = temp->next; 
+        if (temp->prev) // checks if temp's prev pointer is not nullptr, meaning temp is not the first node
+            temp->prev->next = temp->next; // if it is not the first node, updates the previous node's next pointer to skip temp and point to temp's next node
+        else // if temp's prev pointer is nullptr, meaning temp is the first node
+            head = temp->next; // sets the head pointer of the list to temp's next node, effectively removing temp from the front of the list
 
-        if (temp->next)
-            temp->next->prev = temp->prev;
-        else
-            tail = temp->prev; 
+        if (temp->next) // checks if temp's next pointer is not nullptr, meaning temp is not the last node
+            temp->next->prev = temp->prev; // if it is not the last node, updates the next node's prev pointer to skip temp and point to temp's previous node
+        else // if temp's next pointer is nullptr, meaning temp is the last node
+            tail = temp->prev; // sets the tail pointer of the list to temp's previous node, effectively removing temp from the end of the list
 
-        delete temp;
+        delete temp; // deletes the temp object and releases its memory to prevent memory leaks
     }
 
-    void delete_pos(int pos) {
+    void delete_pos(int pos) { 
         if (!head) {
             cout << "List is empty." << endl;
             return;
@@ -169,6 +169,8 @@ public: // this identifier indicates that everything under it is public to the c
             head = tail = nullptr;
         delete temp;
     }
+
+    void every_other_element() {} // temp 
 
     ~DoublyLinkedList() {
         while (head) {
